@@ -11,24 +11,27 @@ public class JDBCloader {
         String password = "developer1";
         ArrayList students = new ArrayList();
 
+
         try {
             connection = DriverManager.getConnection(url, user, password);
             statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS students (student_id int NOT NULL PRIMARY KEY AUTO_INCREMENT, last_name varchar(30) ,firstname varchar(30))");
-            System.out.println("query fatta");
 
-            /*   statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('tommaso', 'main')");
-            statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('federico', 'menomain')");
-            statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('giulia', 'main un tot')");
-            statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('giada', 'lol')"); */
+            /*   statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('rocchi', 'main')");
+            statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('federici', 'menomain')");
+            statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('rossi', 'main un tot')");
+            statement.execute("INSERT INTO newdb.students (last_name, firstname) VALUES ('fabrigna', 'rebecca')"); */
 
-            resultSet = statement.executeQuery("SELECT * FROM newdb.students");
+            resultSet = statement.executeQuery("SELECT last_name FROM newdb.students");
             while(resultSet.next()){
-                System.out.println(resultSet.getString(2));
-                students.add(resultSet.getString(3));
-            }
 
-            System.out.println(students);
+                students.add(resultSet.getString(1));
+
+            }
+            students.stream().forEach((surname) -> {
+                System.out.println(surname);
+            });
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
